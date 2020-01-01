@@ -1,0 +1,44 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuda.senior1.week1.dao.GoodsDao">
+	<select id="selectgoods" resultType="goods">
+		select a.*,b.name bname,c.name tname from tb_goods a
+		left join tb_brand b on a.bid=b.id
+		left join tb_goodskind c on c.id=a.tid
+		<where>
+			<if test="name != null and name != ''">
+				a.name like concat('%',#{name},'%') and a.del=1
+			</if>
+			<if test="name == null or name == ''">
+				a.del=1
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectgood" resultType="goods">
+		select a.*,b.name bname,c.name tname from tb_goods a
+		left join tb_brand b on a.bid=b.id
+		left join tb_goodskind c on c.id=a.tid
+		where a.id = #{g.id}
+	</select>
+	
+	<select id="selectbrand" resultType="brand">
+		select * from tb_brand;
+	</select>
+	
+	<select id="selectType" resultType="goodskind">
+		select * from tb_goodskind;
+	</select>
+	
+	<insert id="addGoods">
+		insert into tb_goods values 
+		(null,#{name},#{ename},#{size},#{price},#{num},#{tab},null,#{bid},#{tid},1)
+	</insert>
+	
+	<update id="update">
+		update tb_goods set name=#{name}, ename=#{ename}, size=#{size}, price=#{price}, num=#{num},
+		tab=#{tab},bid=#{bid},tid=#{tid} where id = #{id}
+	</update>
+</mapper>
