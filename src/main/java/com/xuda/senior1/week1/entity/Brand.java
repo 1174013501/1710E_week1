@@ -1,5 +1,5 @@
 package com.xuda.senior1.week1.entity;
-
+// devdevdevdevdev111111
 public class Brand {
 	Integer id;
 	String name;
